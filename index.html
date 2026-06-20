@@ -1,0 +1,1144 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎂 Вишлист на День Рождения</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            margin-bottom: 20px;
+            animation: fadeIn 0.4s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h1 {
+            text-align: center;
+            color: #764ba2;
+            margin-bottom: 10px;
+            font-size: 2em;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #888;
+            margin-bottom: 30px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 14px 28px;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            color: white;
+        }
+
+        .btn-success:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(17, 153, 142, 0.4);
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, #eb3349 0%, #f45c43 100%);
+            color: white;
+        }
+
+        .btn-danger:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(235, 51, 73, 0.4);
+        }
+
+        .btn-secondary {
+            background: #f0f0f0;
+            color: #555;
+        }
+
+        .btn-secondary:hover {
+            background: #e0e0e0;
+        }
+
+        .btn-small {
+            padding: 8px 16px;
+            font-size: 14px;
+        }
+
+        .btn-block {
+            display: block;
+            width: 100%;
+        }
+
+        .main-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .main-btn {
+            padding: 40px 20px;
+            border-radius: 16px;
+            border: 2px solid #e0e0e0;
+            background: white;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+        }
+
+        .main-btn:hover {
+            border-color: #667eea;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.2);
+        }
+
+        .main-btn .icon {
+            font-size: 48px;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .main-btn h3 {
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .main-btn p {
+            color: #888;
+            font-size: 14px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #555;
+        }
+
+        input[type="text"],
+        input[type="url"],
+        textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: border-color 0.2s;
+            font-family: inherit;
+        }
+
+        input:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .item-form {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+        }
+
+        .wishlist-title {
+            font-size: 1.5em;
+            color: #764ba2;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .items-list {
+            margin-top: 20px;
+        }
+
+        .item-card {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-left: 4px solid #667eea;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .item-card.taken {
+            border-left-color: #38ef7d;
+            background: #f0fff4;
+        }
+
+        .item-card.taken .item-title {
+            color: #2d6a4f;
+        }
+
+        .item-title {
+            font-size: 1.2em;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .item-desc {
+            color: #666;
+            margin-bottom: 10px;
+            line-height: 1.5;
+        }
+
+        .item-link {
+            display: inline-block;
+            color: #667eea;
+            text-decoration: none;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .item-link:hover {
+            text-decoration: underline;
+        }
+
+        .item-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 10px;
+        }
+
+        .taken-info {
+            background: #d4edda;
+            color: #155724;
+            padding: 10px 15px;
+            border-radius: 8px;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .choose-form {
+            background: #e7f3ff;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 10px;
+            display: none;
+        }
+
+        .choose-form.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .choose-form input {
+            margin-bottom: 10px;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px;
+            color: #888;
+        }
+
+        .empty-state .icon {
+            font-size: 64px;
+            margin-bottom: 15px;
+        }
+
+        .share-box {
+            background: #e7f3ff;
+            border: 2px dashed #667eea;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .share-url {
+            background: white;
+            padding: 12px;
+            border-radius: 8px;
+            word-break: break-all;
+            font-family: monospace;
+            font-size: 14px;
+            color: #555;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+        }
+
+        .my-wishlists {
+            margin-top: 30px;
+        }
+
+        .wishlist-preview {
+            background: #f8f9fa;
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .wishlist-preview:hover {
+            background: #e7f3ff;
+            transform: translateX(5px);
+        }
+
+        .wishlist-preview h4 {
+            color: #333;
+            margin-bottom: 3px;
+        }
+
+        .wishlist-preview span {
+            color: #888;
+            font-size: 13px;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .badge-free {
+            background: #cce5ff;
+            color: #004085;
+        }
+
+        .badge-taken {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .back-link {
+            color: #667eea;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            margin-bottom: 15px;
+            cursor: pointer;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            padding: 20px;
+        }
+
+        .modal {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            max-width: 500px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal h3 {
+            margin-bottom: 20px;
+            color: #764ba2;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .stat-box {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .stat-box .number {
+            font-size: 2em;
+            font-weight: 700;
+            color: #667eea;
+        }
+
+        .stat-box .label {
+            color: #888;
+            font-size: 14px;
+        }
+
+        @media (max-width: 600px) {
+            .main-buttons {
+                grid-template-columns: 1fr;
+            }
+            h1 {
+                font-size: 1.5em;
+            }
+            .card {
+                padding: 20px;
+            }
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: #333;
+            color: white;
+            padding: 14px 28px;
+            border-radius: 10px;
+            font-weight: 500;
+            z-index: 2000;
+            transition: transform 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Главная страница -->
+        <div id="page-home" class="card">
+            <h1>🎂 Вишлист</h1>
+            <p class="subtitle">Создай список желаний и поделись с друзьями</p>
+
+            <div class="main-buttons">
+                <div class="main-btn" onclick="showCreatePage()">
+                    <span class="icon">🎁</span>
+                    <h3>Я именинник</h3>
+                    <p>Создать новый вишлист</p>
+                </div>
+                <div class="main-btn" onclick="showJoinForm()">
+                    <span class="icon">🎉</span>
+                    <h3>Я гость</h3>
+                    <p>Открыть вишлист по ссылке</p>
+                </div>
+            </div>
+
+            <div id="join-form" class="hidden" style="margin-top:20px;">
+                <div class="form-group">
+                    <label>Вставьте ссылку на вишлист:</label>
+                    <input type="text" id="join-url" placeholder="https://... или данные из ссылки">
+                </div>
+                <button class="btn btn-primary btn-block" onclick="joinWishlist()">Открыть вишлист</button>
+            </div>
+
+            <div class="my-wishlists" id="my-wishlists-section">
+                <h3 style="margin-bottom:15px; color:#555;">📋 Мои вишлисты</h3>
+                <div id="my-wishlists-list"></div>
+            </div>
+        </div>
+
+        <!-- Страница создания -->
+        <div id="page-create" class="card hidden">
+            <a class="back-link" onclick="goHome()">← Назад</a>
+            <h2 class="wishlist-title">Создание вишлиста</h2>
+
+            <div class="form-group">
+                <label>Название вишлиста</label>
+                <input type="text" id="wl-title" placeholder="Например: Мой День Рождения 2026">
+            </div>
+
+            <div class="item-form">
+                <h4 style="margin-bottom:15px; color:#555;">Добавить подарок</h4>
+                <div class="form-group">
+                    <label>Название</label>
+                    <input type="text" id="item-title" placeholder="Например: Книга '...'">
+                </div>
+                <div class="form-group">
+                    <label>Описание (необязательно)</label>
+                    <textarea id="item-desc" placeholder="Размер, цвет, модель и т.д."></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Ссылка на товар (необязательно)</label>
+                    <input type="url" id="item-link" placeholder="https://...">
+                </div>
+                <button class="btn btn-primary" onclick="addItem()">➕ Добавить в список</button>
+            </div>
+
+            <div id="create-items-list" class="items-list">
+                <div class="empty-state">
+                    <div class="icon">📝</div>
+                    <p>Пока ничего не добавлено</p>
+                </div>
+            </div>
+
+            <div style="margin-top:20px; text-align:center;">
+                <button class="btn btn-success btn-block" id="create-finish-btn" onclick="finishCreate()" disabled>
+                    ✅ Завершить и получить ссылку
+                </button>
+            </div>
+        </div>
+
+        <!-- Страница вишлиста (для именинника) -->
+        <div id="page-owner" class="card hidden">
+            <a class="back-link" onclick="goHome()">← На главную</a>
+            <h2 class="wishlist-title" id="owner-title"></h2>
+
+            <div class="stats" id="owner-stats"></div>
+
+            <div class="share-box">
+                <p style="margin-bottom:10px; font-weight:600;">🔗 Ссылка для гостей</p>
+                <div class="share-url" id="owner-share-url"></div>
+                <button class="btn btn-primary btn-small" onclick="copyShareLink()">📋 Копировать</button>
+                <p style="margin-top:10px; font-size:13px; color:#666;">
+                    Отправьте эту ссылку друзьям. После того как они выберут подарки, скопируйте ссылку заново — она обновится.
+                </p>
+            </div>
+
+            <div class="item-form" style="margin-top:20px;">
+                <h4 style="margin-bottom:15px; color:#555;">Добавить ещё подарок</h4>
+                <div class="form-group">
+                    <input type="text" id="owner-item-title" placeholder="Название">
+                </div>
+                <div class="form-group">
+                    <textarea id="owner-item-desc" placeholder="Описание"></textarea>
+                </div>
+                <div class="form-group">
+                    <input type="url" id="owner-item-link" placeholder="Ссылка на товар">
+                </div>
+                <button class="btn btn-primary" onclick="ownerAddItem()">➕ Добавить</button>
+            </div>
+
+            <h3 style="margin:25px 0 15px; color:#555;">Список подарков</h3>
+            <div id="owner-items-list"></div>
+        </div>
+
+        <!-- Страница вишлиста (для гостя) -->
+        <div id="page-guest" class="card hidden">
+            <a class="back-link" onclick="goHome()">← На главную</a>
+            <h2 class="wishlist-title" id="guest-title"></h2>
+            <p class="subtitle" id="guest-subtitle">Выберите подарок, который хотите подарить</p>
+
+            <div class="stats" id="guest-stats"></div>
+
+            <div id="guest-items-list"></div>
+        </div>
+    </div>
+
+    <!-- Модальное окно подтверждения -->
+    <div id="confirm-modal" class="modal-overlay hidden" onclick="if(event.target===this)closeModal()">
+        <div class="modal">
+            <h3>✋ Вы уверены?</h3>
+            <p id="confirm-text" style="margin-bottom:20px; color:#555;"></p>
+            <div style="display:flex; gap:10px; justify-content:flex-end;">
+                <button class="btn btn-secondary" onclick="closeModal()">Отмена</button>
+                <button class="btn btn-danger" id="confirm-btn" onclick="">Подтвердить</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div id="toast" class="toast"></div>
+
+    <script>
+        // ===== Хранилище =====
+        const STORAGE_KEY = 'birthday_wishlists';
+
+        function getWishlists() {
+            try {
+                return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
+            } catch {
+                return {};
+            }
+        }
+
+        function saveWishlists(wishlists) {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(wishlists));
+        }
+
+        function generateId() {
+            return 'wl_' + Date.now().toString(36) + '_' + Math.random().toString(36).substr(2, 6);
+        }
+
+        // ===== Навигация =====
+        function showPage(id) {
+            ['page-home', 'page-create', 'page-owner', 'page-guest'].forEach(p => {
+                document.getElementById(p).classList.add('hidden');
+            });
+            document.getElementById(id).classList.remove('hidden');
+            window.scrollTo(0, 0);
+        }
+
+        function goHome() {
+            showPage('page-home');
+            renderMyWishlists();
+            document.getElementById('join-form').classList.add('hidden');
+        }
+
+        // ===== Главная =====
+        function showJoinForm() {
+            document.getElementById('join-form').classList.remove('hidden');
+            document.getElementById('join-url').focus();
+        }
+
+        function renderMyWishlists() {
+            const wishlists = getWishlists();
+            const list = document.getElementById('my-wishlists-list');
+            const section = document.getElementById('my-wishlists-section');
+            const ids = Object.keys(wishlists);
+
+            if (ids.length === 0) {
+                section.style.display = 'none';
+                return;
+            }
+            section.style.display = 'block';
+
+            list.innerHTML = ids.map(id => {
+                const wl = wishlists[id];
+                const total = wl.items.length;
+                const taken = wl.items.filter(i => i.taken).length;
+                return `
+                    <div class="wishlist-preview" onclick="openOwnerPage('${id}')">
+                        <div>
+                            <h4>${escapeHtml(wl.title)}</h4>
+                            <span>${total} подарков · ${taken} выбрано</span>
+                        </div>
+                        <span class="badge ${taken === total && total > 0 ? 'badge-taken' : 'badge-free'}">
+                            ${taken}/${total}
+                        </span>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // ===== Создание =====
+        let createItems = [];
+
+        function showCreatePage() {
+            createItems = [];
+            document.getElementById('wl-title').value = '';
+            document.getElementById('item-title').value = '';
+            document.getElementById('item-desc').value = '';
+            document.getElementById('item-link').value = '';
+            renderCreateItems();
+            showPage('page-create');
+        }
+
+        function renderCreateItems() {
+            const list = document.getElementById('create-items-list');
+            const btn = document.getElementById('create-finish-btn');
+
+            if (createItems.length === 0) {
+                list.innerHTML = `
+                    <div class="empty-state">
+                        <div class="icon">📝</div>
+                        <p>Пока ничего не добавлено</p>
+                    </div>
+                `;
+                btn.disabled = true;
+                return;
+            }
+
+            btn.disabled = false;
+            list.innerHTML = createItems.map((item, idx) => `
+                <div class="item-card">
+                    <div class="item-title">${escapeHtml(item.title)}</div>
+                    ${item.desc ? `<div class="item-desc">${escapeHtml(item.desc)}</div>` : ''}
+                    ${item.link ? `<a href="${escapeHtml(item.link)}" target="_blank" class="item-link">🔗 Ссылка на товар</a>` : ''}
+                    <div class="item-actions">
+                        <button class="btn btn-secondary btn-small" onclick="editCreateItem(${idx})">✏️ Изменить</button>
+                        <button class="btn btn-danger btn-small" onclick="removeCreateItem(${idx})">🗑 Удалить</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function addItem() {
+            const title = document.getElementById('item-title').value.trim();
+            const desc = document.getElementById('item-desc').value.trim();
+            const link = document.getElementById('item-link').value.trim();
+
+            if (!title) {
+                showToast('Введите название подарка');
+                return;
+            }
+
+            createItems.push({ title, desc, link, taken: false, takenBy: null });
+            document.getElementById('item-title').value = '';
+            document.getElementById('item-desc').value = '';
+            document.getElementById('item-link').value = '';
+            document.getElementById('item-title').focus();
+            renderCreateItems();
+            showToast('Подарок добавлен!');
+        }
+
+        function removeCreateItem(idx) {
+            createItems.splice(idx, 1);
+            renderCreateItems();
+        }
+
+        function editCreateItem(idx) {
+            const item = createItems[idx];
+            const newTitle = prompt('Название:', item.title);
+            if (newTitle === null) return;
+            const newDesc = prompt('Описание:', item.desc || '');
+            if (newDesc === null) return;
+            const newLink = prompt('Ссылка:', item.link || '');
+            if (newLink === null) return;
+
+            createItems[idx] = {
+                ...item,
+                title: newTitle.trim() || item.title,
+                desc: newDesc.trim(),
+                link: newLink.trim()
+            };
+            renderCreateItems();
+        }
+
+        function finishCreate() {
+            const title = document.getElementById('wl-title').value.trim();
+            if (!title) {
+                showToast('Введите название вишлиста');
+                return;
+            }
+            if (createItems.length === 0) {
+                showToast('Добавьте хотя бы один подарок');
+                return;
+            }
+
+            const id = generateId();
+            const wishlists = getWishlists();
+            wishlists[id] = {
+                id,
+                title,
+                items: createItems,
+                createdAt: Date.now()
+            };
+            saveWishlists(wishlists);
+            openOwnerPage(id);
+        }
+
+        // ===== Страница именинника =====
+        let currentWishlistId = null;
+
+        function openOwnerPage(id) {
+            const wishlists = getWishlists();
+            const wl = wishlists[id];
+            if (!wl) {
+                showToast('Вишлист не найден');
+                return;
+            }
+            currentWishlistId = id;
+
+            document.getElementById('owner-title').textContent = wl.title;
+            renderOwnerItems();
+            updateShareUrl();
+            showPage('page-owner');
+        }
+
+        function renderOwnerItems() {
+            const wishlists = getWishlists();
+            const wl = wishlists[currentWishlistId];
+            if (!wl) return;
+
+            const total = wl.items.length;
+            const taken = wl.items.filter(i => i.taken).length;
+            const free = total - taken;
+
+            document.getElementById('owner-stats').innerHTML = `
+                <div class="stat-box">
+                    <div class="number">${total}</div>
+                    <div class="label">Всего подарков</div>
+                </div>
+                <div class="stat-box">
+                    <div class="number" style="color:${free > 0 ? '#667eea' : '#38ef7d'}">${free}</div>
+                    <div class="label">Свободно</div>
+                </div>
+            `;
+
+            const list = document.getElementById('owner-items-list');
+            if (wl.items.length === 0) {
+                list.innerHTML = '<p style="text-align:center;color:#888;">Список пуст</p>';
+                return;
+            }
+
+            list.innerHTML = wl.items.map((item, idx) => `
+                <div class="item-card ${item.taken ? 'taken' : ''}">
+                    <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+                        <div style="flex:1;">
+                            <div class="item-title">${escapeHtml(item.title)}</div>
+                            ${item.desc ? `<div class="item-desc">${escapeHtml(item.desc)}</div>` : ''}
+                            ${item.link ? `<a href="${escapeHtml(item.link)}" target="_blank" class="item-link">🔗 Ссылка на товар</a>` : ''}
+                        </div>
+                        ${item.taken ? `<span class="badge badge-taken" style="margin-left:10px;">Выбран</span>` : `<span class="badge badge-free" style="margin-left:10px;">Свободно</span>`}
+                    </div>
+                    ${item.taken ? `
+                        <div style="margin-top:10px;">
+                            <span class="taken-info">🎁 Будет дарить: ${escapeHtml(item.takenBy)}</span>
+                        </div>
+                    ` : ''}
+                    <div class="item-actions">
+                        <button class="btn btn-secondary btn-small" onclick="ownerEditItem(${idx})">✏️ Изменить</button>
+                        <button class="btn btn-danger btn-small" onclick="ownerDeleteItem(${idx})">🗑 Удалить</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function ownerAddItem() {
+            const title = document.getElementById('owner-item-title').value.trim();
+            const desc = document.getElementById('owner-item-desc').value.trim();
+            const link = document.getElementById('owner-item-link').value.trim();
+
+            if (!title) {
+                showToast('Введите название подарка');
+                return;
+            }
+
+            const wishlists = getWishlists();
+            const wl = wishlists[currentWishlistId];
+            wl.items.push({ title, desc, link, taken: false, takenBy: null });
+            saveWishlists(wishlists);
+
+            document.getElementById('owner-item-title').value = '';
+            document.getElementById('owner-item-desc').value = '';
+            document.getElementById('owner-item-link').value = '';
+            renderOwnerItems();
+            updateShareUrl();
+            showToast('Подарок добавлен!');
+        }
+
+        function ownerEditItem(idx) {
+            const wishlists = getWishlists();
+            const item = wishlists[currentWishlistId].items[idx];
+            const newTitle = prompt('Название:', item.title);
+            if (newTitle === null) return;
+            const newDesc = prompt('Описание:', item.desc || '');
+            if (newDesc === null) return;
+            const newLink = prompt('Ссылка:', item.link || '');
+            if (newLink === null) return;
+
+            item.title = newTitle.trim() || item.title;
+            item.desc = newDesc.trim();
+            item.link = newLink.trim();
+            saveWishlists(wishlists);
+            renderOwnerItems();
+            updateShareUrl();
+        }
+
+        function ownerDeleteItem(idx) {
+            showConfirm('Удалить этот подарок из списка?', () => {
+                const wishlists = getWishlists();
+                wishlists[currentWishlistId].items.splice(idx, 1);
+                saveWishlists(wishlists);
+                renderOwnerItems();
+                updateShareUrl();
+                showToast('Подарок удалён');
+            });
+        }
+
+        function updateShareUrl() {
+            const wishlists = getWishlists();
+            const wl = wishlists[currentWishlistId];
+            if (!wl) return;
+
+            const data = btoa(unescape(encodeURIComponent(JSON.stringify(wl))));
+            const url = `${window.location.origin}${window.location.pathname}#${data}`;
+            document.getElementById('owner-share-url').textContent = url;
+        }
+
+        function copyShareLink() {
+            const text = document.getElementById('owner-share-url').textContent;
+            navigator.clipboard.writeText(text).then(() => {
+                showToast('Ссылка скопирована!');
+            }).catch(() => {
+                const ta = document.createElement('textarea');
+                ta.value = text;
+                document.body.appendChild(ta);
+                ta.select();
+                document.execCommand('copy');
+                document.body.removeChild(ta);
+                showToast('Ссылка скопирована!');
+            });
+        }
+
+        // ===== Гость =====
+        let guestWishlist = null;
+        let guestDataKey = null;
+
+        function joinWishlist() {
+            let input = document.getElementById('join-url').value.trim();
+            if (!input) {
+                showToast('Вставьте ссылку');
+                return;
+            }
+
+            // Если вставили полный URL — извлекаем хэш
+            if (input.includes('#')) {
+                input = input.split('#')[1];
+            }
+
+            try {
+                const json = decodeURIComponent(escape(atob(input)));
+                const wl = JSON.parse(json);
+                if (!wl.items || !Array.isArray(wl.items)) throw new Error();
+                openGuestPage(wl, input);
+            } catch {
+                showToast('Неверная ссылка. Проверьте и попробуйте снова.');
+            }
+        }
+
+        function openGuestPage(wl, dataKey) {
+            guestWishlist = wl;
+            guestDataKey = dataKey;
+
+            document.getElementById('guest-title').textContent = wl.title;
+            renderGuestItems();
+            showPage('page-guest');
+        }
+
+        function renderGuestItems() {
+            const wl = guestWishlist;
+            const total = wl.items.length;
+            const taken = wl.items.filter(i => i.taken).length;
+            const free = total - taken;
+
+            document.getElementById('guest-stats').innerHTML = `
+                <div class="stat-box">
+                    <div class="number">${total}</div>
+                    <div class="label">Всего подарков</div>
+                </div>
+                <div class="stat-box">
+                    <div class="number" style="color:${free > 0 ? '#667eea' : '#38ef7d'}">${free}</div>
+                    <div class="label">Свободно</div>
+                </div>
+            `;
+
+            const list = document.getElementById('guest-items-list');
+            if (wl.items.length === 0) {
+                list.innerHTML = '<p style="text-align:center;color:#888;">Список пуст</p>';
+                return;
+            }
+
+            list.innerHTML = wl.items.map((item, idx) => `
+                <div class="item-card ${item.taken ? 'taken' : ''}">
+                    <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+                        <div style="flex:1;">
+                            <div class="item-title">${escapeHtml(item.title)}</div>
+                            ${item.desc ? `<div class="item-desc">${escapeHtml(item.desc)}</div>` : ''}
+                            ${item.link ? `<a href="${escapeHtml(item.link)}" target="_blank" class="item-link">🔗 Ссылка на товар</a>` : ''}
+                        </div>
+                        ${item.taken ? `<span class="badge badge-taken" style="margin-left:10px;">Выбран</span>` : `<span class="badge badge-free" style="margin-left:10px;">Свободно</span>`}
+                    </div>
+
+                    ${item.taken ? `
+                        <div style="margin-top:10px;">
+                            <span class="taken-info">🎁 Будет дарить: ${escapeHtml(item.takenBy)}</span>
+                        </div>
+                        <div class="item-actions">
+                            <button class="btn btn-danger btn-small" onclick="guestCancel(${idx})">❌ Отменить выбор</button>
+                        </div>
+                    ` : `
+                        <div class="item-actions">
+                            <button class="btn btn-success btn-small" onclick="showChooseForm(${idx})">🎁 Я подарю это</button>
+                        </div>
+                        <div class="choose-form" id="choose-form-${idx}">
+                            <label style="font-size:14px; margin-bottom:8px; display:block;">Введите ваше имя и фамилию:</label>
+                            <input type="text" id="choose-name-${idx}" placeholder="Иван Иванов">
+                            <button class="btn btn-success btn-small" onclick="guestChoose(${idx})">Подтвердить выбор</button>
+                            <button class="btn btn-secondary btn-small" onclick="hideChooseForm(${idx})">Отмена</button>
+                        </div>
+                    `}
+                </div>
+            `).join('');
+        }
+
+        function showChooseForm(idx) {
+            document.querySelectorAll('.choose-form').forEach(f => f.classList.remove('active'));
+            const form = document.getElementById(`choose-form-${idx}`);
+            if (form) {
+                form.classList.add('active');
+                setTimeout(() => document.getElementById(`choose-name-${idx}`).focus(), 50);
+            }
+        }
+
+        function hideChooseForm(idx) {
+            const form = document.getElementById(`choose-form-${idx}`);
+            if (form) form.classList.remove('active');
+        }
+
+        function guestChoose(idx) {
+            const name = document.getElementById(`choose-name-${idx}`).value.trim();
+            if (!name) {
+                showToast('Введите имя и фамилию');
+                return;
+            }
+
+            guestWishlist.items[idx].taken = true;
+            guestWishlist.items[idx].takenBy = name;
+
+            // Сохраняем в localStorage гостя (если захочет вернуться)
+            const guestStorage = JSON.parse(localStorage.getItem('guest_wishlists') || '{}');
+            guestStorage[guestWishlist.id] = guestWishlist;
+            localStorage.setItem('guest_wishlists', JSON.stringify(guestStorage));
+
+            // Если это устройство именинника — обновляем и его вишлист тоже
+            const wishlists = getWishlists();
+            if (wishlists[guestWishlist.id]) {
+                wishlists[guestWishlist.id].items = guestWishlist.items;
+                saveWishlists(wishlists);
+            }
+
+            renderGuestItems();
+            showToast(`Отлично! Вы выбрали: ${guestWishlist.items[idx].title}`);
+        }
+
+        function guestCancel(idx) {
+            showConfirm('Отменить выбор этого подарка?', () => {
+                guestWishlist.items[idx].taken = false;
+                guestWishlist.items[idx].takenBy = null;
+
+                const guestStorage = JSON.parse(localStorage.getItem('guest_wishlists') || '{}');
+                guestStorage[guestWishlist.id] = guestWishlist;
+                localStorage.setItem('guest_wishlists', JSON.stringify(guestStorage));
+
+                const wishlists = getWishlists();
+                if (wishlists[guestWishlist.id]) {
+                    wishlists[guestWishlist.id].items = guestWishlist.items;
+                    saveWishlists(wishlists);
+                }
+
+                renderGuestItems();
+                showToast('Выбор отменён');
+            });
+        }
+
+        // ===== Утилиты =====
+        function escapeHtml(text) {
+            if (!text) return '';
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            toast.textContent = msg;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 2500);
+        }
+
+        let confirmCallback = null;
+        function showConfirm(text, callback) {
+            confirmCallback = callback;
+            document.getElementById('confirm-text').textContent = text;
+            document.getElementById('confirm-modal').classList.remove('hidden');
+        }
+
+        function closeModal() {
+            document.getElementById('confirm-modal').classList.add('hidden');
+            confirmCallback = null;
+        }
+
+        document.getElementById('confirm-btn').onclick = function() {
+            if (confirmCallback) confirmCallback();
+            closeModal();
+        };
+
+        // ===== Инициализация =====
+        function init() {
+            renderMyWishlists();
+
+            // Проверяем хэш в URL (кто-то открыл ссылку)
+            if (window.location.hash) {
+                const hash = window.location.hash.slice(1);
+                if (hash) {
+                    try {
+                        const json = decodeURIComponent(escape(atob(hash)));
+                        const wl = JSON.parse(json);
+                        if (wl.items && Array.isArray(wl.items)) {
+                            // Проверяем, есть ли в localStorage более свежая версия
+                            const wishlists = getWishlists();
+                            if (wishlists[wl.id]) {
+                                openOwnerPage(wl.id);
+                            } else {
+                                openGuestPage(wl, hash);
+                            }
+                            return;
+                        }
+                    } catch {
+                        // игнорируем невалидный хэш
+                    }
+                }
+            }
+        }
+
+        init();
+    </script>
+</body>
+</html>
